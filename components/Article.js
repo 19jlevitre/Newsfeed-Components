@@ -93,17 +93,58 @@ const data = [
   Step 1: Write a component called 'articleMaker' to create an article.
   Your component is a function that takes an article object as its only argument,
   and returns a DOM node looking like the one below:
+  
+  
 
   <div class="article">
     <h2>{title of the article}</h2>
     <p class="date">{date of the article}</p>
 
     {three separate paragraph elements}
-
+  <p>x3
     <span class="expandButton">+</span>
-  </div>
+  </div> /*/
+  //  const { title, date, }
+    const articles = document.querySelector('.articles');
+  
+  
+    function articleMaker({title, date, firstParagraph, secondParagraph, thirdParagraph}){ 
+    const article = document.createElement('div');
+    const header = document.createElement('h2');
+    const when = document.createElement('p');
+    const paragraphOne = document.createElement('p');
+    const paragraphTwo = document.createElement('p');
+    const paragraphThree = document.createElement('p');
+    const expandButton = document.createElement('span');
+    article.appendChild(header);
+    article.appendChild(when);
+    article.appendChild(paragraphOne);
+    article.appendChild(paragraphTwo);
+    article.appendChild(paragraphThree);
+    article.appendChild(expandButton);
+    article.classList.add('article', 'article-open');
+    when.classList.add('date');
+    expandButton.classList.add('expandButton');
+    header.textContent = title;
+    when.textContent = date;
+    paragraphOne.textContent = firstParagraph;
+    paragraphTwo.textContent = secondParagraph;
+    paragraphThree.textContent = thirdParagraph;
+    expandButton.textContent = 'expand';
+    expandButton.addEventListener('click', () => {
+     article.classList.toggle('article-open');
+    } )
+    return article
+  };
 
-  Step 2: Still inside `articleMaker`, add an event listener to the span.expandButton.
+  const articleElements = data.map(articleElement => {
+    return articleMaker(articleElement);
+  })
+  articleElements.forEach(articleElement => {
+    articles.appendChild(articleElement);
+  });
+
+  /*Step 2: Still inside `articleMaker`, add an event listener to the span.expandButton.
   This listener should toggle the class 'article-open' on div.article.
 
   Step 3: Don't forget to return something from your function!
